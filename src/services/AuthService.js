@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
-import { users } from "../database/models";
+import { Op } from 'sequelize';
+import { users, dms } from "../database/models";
 import Queries from "./Queries";
 import HashPassword from "../helpers/HashPassword";
 
@@ -24,7 +25,35 @@ class AuthService {
     return newUser;
   }
 
-  
+  /**
+   * Retrieve All users on the system
+   * @static
+   * @param {object} req  request object
+   * @memberof AuthService
+   * @returns {object} retrievd all users
+   */
+  static async viewUsersAlongsideDms(req) {
+    const { user: { id }} = req;
+    const allUsers = await Queries.findAll(users, {
+      where: { id: { [Op.ne]: id } },
+      attributes: {
+        exclude: ["password"],
+      },
+      include: [
+        {
+          model: dms, as: 'dms',
+          where: {
+            [Op.or]: [
+              { senderId: id },
+              { receiverId: id }
+            ]
+          }
+        }
+      ],
+      order: [["createdAt", "DESC"]]
+    });
+    return allUsers;
+  }
 
 
 }

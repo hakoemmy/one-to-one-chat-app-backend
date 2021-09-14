@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING
   }, {});
-  users.associate = function(models) {};
+  users.associate = ({ dms }) =>  {
+    users.hasMany(dms, { foreignKey: 'creatorId', targetKey: 'id', as: 'dms' });
+  };
   return users;
 };

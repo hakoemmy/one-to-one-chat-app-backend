@@ -2,7 +2,6 @@ import httpStatus from "http-status";
 import AuthService from "../services/AuthService";
 import Response from "../helpers/Response";
 import TokenAuthenticator from "../helpers/TokenAuthenticator";
-import HashPassword from "../helpers/HashPassword";
 
 /**
  * Auth controller
@@ -12,7 +11,7 @@ class AuthController {
   /**
    * @param {object} req
    * @param {object} res
-   * @returns {object} function to create new account for the provider
+   * @returns {object} function to create new account
    */
   static async signup(req, res) {
     const newUser = await AuthService.signup(req);
@@ -27,7 +26,7 @@ class AuthController {
     );
   }
 
-    /**
+  /**
    * User can be able to log in
    * @description POST /api/auth/signin
    * @static
@@ -44,6 +43,22 @@ class AuthController {
       res,
       "Logged in successfully",
       { token },
+      httpStatus.OK
+    );
+  }
+
+  /**
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} function to retrieve all users and my dms to them
+   */
+  static async viewAllUsers(req, res) {
+    const availableUsers = await AuthService.viewUsersAlongsideDms(req);
+
+    Response.successMessage(
+      res,
+      "All users and your dms retieved successfully!",
+      availableUsers ,
       httpStatus.OK
     );
   }

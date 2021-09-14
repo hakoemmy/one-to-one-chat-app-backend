@@ -4,6 +4,7 @@ import { accountExist, userExist } from "../../middlewares/ScopeChecker";
 import AuthController from "../../controllers/AuthController";
 import DataChecker from "../../middlewares/DataChecker";
 import inputError from "../../middlewares/inputError";
+import verifyToken from "../../middlewares/verifyToken";
 
 const authRouter = express.Router();
 
@@ -93,5 +94,42 @@ authRouter.post(
   inputError,
   DataChecker.validateCredentials,
   AuthController.login
+);
+
+/**
+ * @swagger
+ *
+ * /api/v1/auth/users:
+ *   get:
+ *     security: []
+ *     summary: Get users alongside DMs
+ *     description: Get users alongside DMs
+ *     tags:
+ *      - Auth
+ *     parameters:
+ *        - name: x-auth-token
+ *          in : header
+ *          description: authorization header
+ *          required: true
+ *          type: string
+ *     produces:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               data:
+ *                 type: string
+ *               message:
+ *                 type: string
+ *
+ *     responses:
+ *       200:
+ *         description: Users retrived
+ */
+
+authRouter.get(
+  "/users",
+  verifyToken,
+  AuthController.viewAllUsers
 );
 export default authRouter;

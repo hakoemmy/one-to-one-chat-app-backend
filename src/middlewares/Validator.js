@@ -48,6 +48,18 @@ class Validator {
       check("password", "Password should be valid").isString(),
     ];
   }
+
+  /**
+   * Validate input
+   * @static
+   * @returns {object} errors
+   */
+  static dmRules() {
+    return [
+      check("receiverId", "Receiver Id should be provided").trim().isString(),
+      check("message", "Message should be valid").isString(),
+    ];
+  }
 }
 
 export default Validator;
