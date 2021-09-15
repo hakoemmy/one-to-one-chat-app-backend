@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     message: DataTypes.TEXT
   }, {});
   dms.associate = ({ users })  => {
-    dms.belongsTo(users, { foreignKey: 'creatorId', targetKey: 'id', as: 'dms' });
+    dms.belongsTo(users, { foreignKey: 'receiverId', targetKey: 'id', as: 'sentDms' });
+    dms.belongsTo(users, { foreignKey: 'senderId', targetKey: 'id', as: 'receivedDms' });
   };
   return dms;
 };

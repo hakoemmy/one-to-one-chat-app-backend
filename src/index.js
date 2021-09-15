@@ -4,8 +4,10 @@ import bodyParser from 'body-parser';
 import router from './routes'
 import HttpStatus from 'http-status-codes';
 import cors from 'cors';
+import { bootStrapSocketIo } from './helpers/socketIoSetup';
 
 const app = express();
+bootStrapSocketIo(app);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 app.use(cors())

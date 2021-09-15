@@ -51,6 +51,7 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.4.1",
     "sequelize": "^5.22.4",
+    "socket.io": "^4.2.0",
     "stripe": "^8.137.0",
     "swagger-jsdoc": "^3.5.0",
     "swagger-ui-express": "^4.1.3",

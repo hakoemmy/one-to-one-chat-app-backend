@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   }, {});
   users.associate = ({ dms }) =>  {
-    users.hasMany(dms, { foreignKey: 'creatorId', targetKey: 'id', as: 'dms' });
+    users.hasMany(dms, { foreignKey: 'receiverId', targetKey: 'id', as: 'sentDms' });
+    users.hasMany(dms, { foreignKey: 'senderId', targetKey: 'id', as: 'receivedDms' });
   };
   return users;
 };
