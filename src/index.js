@@ -7,7 +7,6 @@ import cors from 'cors';
 import { bootStrapSocketIo } from './helpers/socketIoSetup';
 
 const app = express();
-bootStrapSocketIo(app);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 app.use(cors())
@@ -27,11 +26,9 @@ app.use('*', (req, res) =>
   'Oops, this route does not exist',
   HttpStatus.NOT_FOUND)
 );
-
 const port = process.env.PORT || 5000;
-
-app.listen(port, ()=>{
+const serverInstance = app.listen(port, ()=>{
     console.log(`Server is running on PORT ${port}...`);
 })
-
+bootStrapSocketIo(serverInstance);
 export default app;
